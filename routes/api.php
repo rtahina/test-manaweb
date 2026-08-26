@@ -9,4 +9,6 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 Route::get('tasks', [TaskController::class, 'index']);
-Route::post('taks', [TaskController::class, 'create']);
+Route::post('tasks', [TaskController::class, 'create']);
+Route::patch('tasks/{task}', [TaskController::class, 'reverseTaskStatus']);
+Route::delete('tasks/{task}', [TaskController::class, 'delete']);
