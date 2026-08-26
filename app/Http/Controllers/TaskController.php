@@ -24,6 +24,7 @@ class TaskController extends Controller
     /**
      * Create a new task.
      *
+     * @param TaskRequest $request Form request
      * @return Response
      */
     public function create(TaskRequest $request)
