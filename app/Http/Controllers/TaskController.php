@@ -61,7 +61,7 @@ class TaskController extends Controller
         $task->delete();
 
         return Response([
-            'message' => 'Resource successfully deleted.',
+            'message' => 'Task successfully deleted.',
         ]);
     }
 }
