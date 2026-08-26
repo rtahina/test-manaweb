@@ -30,6 +30,7 @@ class TaskController extends Controller
     {
         $payload = $request->only('title');
         $newTask = Task::create($payload);
+        $newTask->refresh();
 
         return Response(new TaskResource($newTask), 201);
     }
@@ -38,7 +39,6 @@ class TaskController extends Controller
      * Reverse the is_completed field of a specific task.
      *
      * @param  Task  $task  The current task
-     * @param  TaskRequest  $request
      * @return Response
      */
     public function reverseTaskStatus(Task $task)
