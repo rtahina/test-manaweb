@@ -10,11 +10,11 @@ class Task extends Model
      * @var array
      */
     protected $fillable = ['title', 'is_completed'];
-    
+
     protected function casts(): array
-{
-    return [
-        'is_completed' => 'boolean',
-    ];
-}
+    {
+        return [
+            'is_completed' => 'boolean',
+        ];
+    }
 }
