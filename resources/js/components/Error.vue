@@ -13,10 +13,11 @@
 
 <style scoped>
     .error {
-        border: 2px solid red;
+        border: 2px solid rgb(199, 37, 37);
         padding: 0.5rem;
         text-align: center;
         margin:1rem;
-        color: red;
+        color: rgb(199, 37, 37);
+        border-radius: 10px;
     }
 </style>
