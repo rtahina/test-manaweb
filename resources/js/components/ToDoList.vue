@@ -45,12 +45,12 @@
         <Loader />
     </span>
     <span v-else>
-        <div v-for="item in store.tasks" :key="item.id">
+        <span v-if="store.tasks.length === 0">Vous n'avez pas de taches pour l'instant.</span>
+        <div v-else v-for="item in store.tasks" :key="item.id">
             <TodoListIem 
             :id="item.id"
             :title="item.title"
             :is_completed="item.is_completed"
-            :hideCompleted="hideCompleted"
         />
         </div>
     </span>

@@ -1,9 +1,8 @@
 <script setup>
     import { toDoStore } from "@/store/ToDoStore";
-    import Error from "./Error.vue";
-
+   
     const store = toDoStore();
-    const { tasks, isReady, errorMessage } = store;
+    const { isReady, errorMessage, hideCompleted } = store;
 
     const props = defineProps({
         id: {
@@ -15,10 +14,6 @@
             required: true,
         },
         is_completed: {
-            type: Boolean,
-            default: false
-        },
-        hideCompleted: {
             type: Boolean,
             default: false
         }
@@ -86,12 +81,12 @@
             store.isReady = true;
         }
     }
+    
 </script>
 
-<template>        
-    <span v-if="is_completed && hideCompleted">        
-    </span>
-    <span v-else class="todo-list-item">
+<template>
+    
+    <span class="todo-list-item" :class="{hide: (is_completed && store.hideCompleted)}">
         <input type="checkbox" @click="toggleComplete(id)" :checked="is_completed"/>
         <span :class="{ completed: is_completed }" 
             :title="'Click to mark as ' + (is_completed ? 'todo' : 'completed')">{{ title }}
@@ -103,14 +98,27 @@
 <style scoped>
 .todo-list-item {
     display: flex;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.5rem;
     border: 1px solid #ccc;
-    padding: 0.5rem 0.5rem;
+    padding: 1rem 1.5rem;
     font-weight: 500;
+    background-color: #ddd;
+    border-radius: 10px;
+
+    button {
+        border: none;
+        outline: none;
+        box-shadow: none;
+        width: 20px;
+        height: 20px;
+        background: url(../images/bin.png) center center no-repeat;
+        background-size: contain;
+        overflow: hidden;
+        text-indent: -9999px;
+    }
 }
 .todo-list-item:hover {
     background-color: #efefef;
-    cursor: pointer;
 }
 .todo-list-item span {
     display: block;
@@ -119,6 +127,10 @@
 }
 .completed {
     font-weight: normal;
-    text-decoration: line-through
+    color: #999;
+}
+
+.hide {
+    display: none;
 }
 </style>

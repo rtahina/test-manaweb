@@ -6,6 +6,8 @@ export const toDoStore = defineStore('todos', () => {
     const isReady = ref(true);
     const errorMessage = ref('');
     const tasks = ref([]);
+    const hideActive = ref(false);
+    const hideCompleted = ref(false);
     
     const todo = ref({
         id:0,
@@ -41,6 +43,19 @@ export const toDoStore = defineStore('todos', () => {
         return (completed * 100) / allTasks;
     }
 
+    const toggleHideActive = () => {
+        return hideActive.value = !hideActive.value;
+    }
+
+    const toggleHideCompleted = () => {
+        return hideCompleted.value = !hideCompleted.value;
+    }
+
+    const resetToggles = () => {
+        hideCompleted.value = false;
+        hideActive.value = false;
+    }
+
     return { 
         addTodo, 
         todo, 
@@ -48,6 +63,11 @@ export const toDoStore = defineStore('todos', () => {
         countActive, 
         countCompleted, 
         progress, 
+        toggleHideActive,
+        toggleHideCompleted,
+        resetToggles,
+        hideActive,
+        hideCompleted,
         isLoading, 
         isReady, 
         errorMessage 

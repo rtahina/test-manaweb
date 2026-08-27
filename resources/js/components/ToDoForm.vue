@@ -6,7 +6,7 @@
 
     const newTodoItem = ref('');
     const store = toDoStore();
-    const { errorMessage, isReady } = store;
+    const { errorMessage, isReady, toggleHideCompleted, resetToggles } = store;
 
     const addNewTask = () =>{
         store.errorMessage = '';
@@ -38,6 +38,15 @@
             store.isReady = true;
         }
     }
+
+    const toggleShowActive = () => {
+        toggleHideCompleted();
+    }
+
+    const resetFilters = () => {
+        resetToggles();
+    }
+    
 </script>
 
 <template>
@@ -53,8 +62,8 @@
         </div>
         <div class="right">
             <div class="tags">
-                <span>Toutes ({{ store.tasks.length }})</span>
-                <span>En cours ({{ store.countActive() }}) </span>
+                <span @click="resetFilters">Toutes ({{ store.tasks.length }})</span>
+                <span @click="toggleShowActive">En cours ({{ store.countActive() }}) </span>
                 <span>complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
             </div>
             <Progress />
@@ -142,6 +151,7 @@
                 color: #555;
                 font-size: 0.8em;
                 font-weight: 500;
+                cursor: pointer;
             }
         }
     }
