@@ -39,6 +39,8 @@ export const toDoStore = defineStore('todos', () => {
     const progress = () => {
         const allTasks = tasks.value.length;
         const completed = countCompleted();
+
+        if (allTasks === 0) return 0;
         
         return (completed * 100) / allTasks;
     }
