@@ -32,7 +32,10 @@
         <Loader />
     </span>
     <span>
-        <div v-for="item in store.tasks" :key="item.id">
+        <span v-if="store.isReady && store.tasks.length === 0">
+            Vous n'avez aucune tâche pour l'instant.
+        </span>
+        <div v-else v-for="item in store.tasks" :key="item.id">
             <TodoListIem 
             :id="item.id"
             :title="item.title"

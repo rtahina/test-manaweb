@@ -49,7 +49,7 @@
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            store.isReady = false;
+            store.isReady = true;
         }
     }
     
