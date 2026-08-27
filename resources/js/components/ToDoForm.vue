@@ -22,17 +22,14 @@
                 },
                 body: JSON.stringify(patchData)
             })
+            .then(data => data.json())
             .then(data => {
-                if (data.status !== 201) {
+                if (data.errors) {
                     store.errorMessage = data.message;
-                    return;
                 } else {
-                    return data.json()
+                    store.tasks.push(data);
+                    newTodoItem.value = '';
                 }
-            })
-            .then(data => {
-                store.tasks.push(data);
-                newTodoItem.value = '';
             })
         } catch (e) {
             store.errorMessage = e.message;
