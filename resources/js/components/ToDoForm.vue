@@ -70,9 +70,9 @@
         </div>
         <div class="right">
             <div class="tags">
-                <span @click="resetFilters">Toutes ({{ store.tasks.length }})</span>
-                <span @click="toggleShowActive">En cours ({{ store.countActive() }}) </span>
-                <span @click="toggleShowCompleted">complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
+                <span @click="resetFilters" :class="{active: !store.hideActive && !store.hideCompleted}">Toutes ({{ store.tasks.length }})</span>
+                <span @click="toggleShowActive" :class="{active: store.hideCompleted}">En cours ({{ store.countActive() }}) </span>
+                <span @click="toggleShowCompleted" :class="{active: store.hideActive}">complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
             </div>
             <Progress />
         </div>
@@ -146,9 +146,7 @@
             justify-content: flex-start;
             gap: 0.5em;
             padding: 1rem 0.5rem;
-            background-color: #efefef;
-            margin-bottom: 0.5rem;
-
+            
             span {
                 display: inline-flex;
                 justify-content: center;
@@ -160,7 +158,12 @@
                 font-size: 0.8em;
                 font-weight: 500;
                 cursor: pointer;
+                transition: all 0.3s ease-in;
             }
         }
+    }
+
+    .active {
+        background-color: #ddd;
     }
 </style>
