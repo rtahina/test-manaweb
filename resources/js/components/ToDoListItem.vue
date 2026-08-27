@@ -2,8 +2,7 @@
     import { toDoStore } from "@/store/ToDoStore";
    
     const store = toDoStore();
-    const { isReady, errorMessage, hideCompleted } = store;
-
+    
     const props = defineProps({
         id: {
             type: Number,
@@ -19,10 +18,11 @@
         }
     });
 
+    // Toggle a task is_completed column
     const toggleComplete = (id) => {
         const url = `http://127.0.0.1:8000/api/tasks/${id}`;
         try {
-            const data = fetch(url, {
+            fetch(url, {
                 method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
@@ -49,7 +49,7 @@
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            store.isReady = true;
+            store.isReady = false;
         }
     }
     
@@ -81,13 +81,16 @@
             store.isReady = true;
         }
     }
-    
 </script>
 
 <template>
-    
     <span class="todo-list-item" :class="{hide: (is_completed && store.hideCompleted) || (!is_completed && store.hideActive)}">
-        <input type="checkbox" @click="toggleComplete(id)" :checked="is_completed"/>
+        <div class="container">
+            <div class="round">
+                <input type="checkbox" @click="toggleComplete(id)" :checked="is_completed" :id="`chk_${id}`" />
+                <label :for="`chk_${id}`"></label>
+            </div>
+        </div>
         <span :class="{ completed: is_completed }" 
             :title="'Click to mark as ' + (is_completed ? 'todo' : 'completed')">{{ title }}
         </span>
@@ -96,41 +99,91 @@
 </template>
 
 <style scoped>
-.todo-list-item {
-    display: flex;
-    margin-bottom: 0.5rem;
-    border: 1px solid #ccc;
-    padding: 1rem 1.5rem;
-    font-weight: 500;
-    background-color: #ddd;
-    border-radius: 10px;
+    /* todo row */
+    .todo-list-item {
+        display: flex;
+        margin-bottom: 0.5rem;
+        border: 1px solid #ccc;
+        padding: 1rem 1.5rem;
+        font-weight: 500;
+        background-color: #ddd;
+        border-radius: 10px;
+        transition: all 0.3s ease-in;
 
-    button {
-        border: none;
-        outline: none;
-        box-shadow: none;
-        width: 20px;
-        height: 20px;
-        background: url(../images/bin.png) center center no-repeat;
-        background-size: contain;
-        overflow: hidden;
-        text-indent: -9999px;
+        button {
+            border: none;
+            outline: none;
+            box-shadow: none;
+            width: 20px;
+            height: 20px;
+            background: url(../images/bin.png) center center no-repeat;
+            background-size: contain;
+            overflow: hidden;
+            text-indent: -9999px;
+        }
     }
-}
-.todo-list-item:hover {
-    background-color: #efefef;
-}
-.todo-list-item span {
-    display: block;
-    padding-left: 0.5rem;
-    flex: 1;
-}
-.completed {
-    font-weight: normal;
-    color: #999;
-}
+    .todo-list-item:hover {
+        background-color: #efefef;
+    }
+    .todo-list-item {
+        span {    
+            display: block;
+            padding-left: 0.5rem;
+            flex: 1;
+        }
+    }
+    
+    /* Checkbox */
+    .round {
+        position: relative;
+    }
 
-.hide {
-    display: none;
-}
+    .round label {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 20px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 20px;
+    }
+
+    .round label:after {
+        border: 3px solid #fff;
+        border-top: none;
+        border-right: none;
+        content: "";
+        height: 5px;
+        left: 4px;
+        opacity: 0;
+        position: absolute;
+        top: 5px;
+        transform: rotate(-45deg);
+        width: 9px;
+    }
+
+    .round input[type="checkbox"] {
+        visibility: hidden;
+    }
+
+    .round input[type="checkbox"]:checked + label {
+        background-color: #66bb6a;
+        border-color: #66bb6a;
+    }
+
+    .round input[type="checkbox"]:checked + label:after {
+        opacity: 1;
+    }
+
+    /* Utilities */
+    .completed {
+        font-weight: normal;
+        color: #999;
+    }
+
+    .hide {
+        display: none;
+    }
 </style>
