@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const toDoStore = defineStore('todos', () => {
-    const isNewItem = ref(false);
     const isLoading = ref(false);
     const isReady = ref(true);
     const errorMessage = ref('');
@@ -35,5 +34,22 @@ export const toDoStore = defineStore('todos', () => {
         return active.length;
     }
 
-    return { addTodo, todo, tasks, countActive, countCompleted, isNewItem, isLoading, isReady, errorMessage };
+    const progress = () => {
+        const allTasks = tasks.value.length;
+        const completed = countCompleted();
+        
+        return (completed * 100) / allTasks;
+    }
+
+    return { 
+        addTodo, 
+        todo, 
+        tasks, 
+        countActive, 
+        countCompleted, 
+        progress, 
+        isLoading, 
+        isReady, 
+        errorMessage 
+    };
 });
