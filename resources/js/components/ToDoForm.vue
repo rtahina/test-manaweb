@@ -10,6 +10,7 @@
 
     const addNewTask = () =>{
         store.errorMessage = '';
+        store.isReady = false;
         const url = `http://127.0.0.1:8000/api/tasks/`;
         const patchData = {
             title: newTodoItem.value
@@ -31,11 +32,12 @@
                     store.tasks.push(data);
                     newTodoItem.value = '';
                 }
+                store.isReady = true;
             })
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            store.isReady = true;
+            store.isReady = false;
         }
     }
 
