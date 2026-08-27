@@ -5,31 +5,26 @@
     import { toDoStore } from "@/store/ToDoStore";
     import Loader from "./Loader.vue"
     
-    const isLoading = ref(false);
-    const isReady = ref(false);
-    // const items = ref([]);
     const hideCompleted = ref(false);
     const store = toDoStore();
-    const { tasks, countActive, countCompleted, errorMessage, isNewItem } = storeToRefs(store);
+    const { tasks, countActive, countCompleted, isReady, errorMessage } = storeToRefs(store);
     const nbrItems = ref(0);
     
     const fetchTodos = async() => {
-        isLoading.value = true;
-        isReady.value = false;
+        store.isReady = false;
         
         try {
             const data = fetch("http://127.0.0.1:8000/api/tasks")
             .then(data => data.json())
             .then(data => {
-                // items.value = data;
                 store.tasks = data;
-                isReady.value = true;
+                store.isReady = true;
                 nbrItems.value = data.length;
             })
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            isLoading.value = false;
+            store.isReady = true;
         }
     }
     fetchTodos();
@@ -45,7 +40,7 @@
 </script>
 
 <template>
-    <span v-if="!isReady">
+    <span v-if="!store.isReady">
         <Loader />
     </span>
     <span v-else>

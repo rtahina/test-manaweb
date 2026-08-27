@@ -3,7 +3,7 @@
     import Error from "./Error.vue";
 
     const store = toDoStore();
-    const { tasks, errorMessage } = store;
+    const { tasks, isReady, errorMessage } = store;
 
     const props = defineProps({
         id: {
@@ -30,27 +30,31 @@
             const data = fetch(url, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'Accept': 'application/json',
                 }
             })
             .then(data => data.json())
             .then(data => {
-                store.tasks.find((o, i) => {
-                    if (o.id === id) {
-                        store.tasks[i] = { 
-                            id: o.id, 
-                            title: o.title, 
-                            is_completed: !o.is_completed 
-                        };
-                        return true;
-                    }
-                });
+                if (data.errors) {
+                    store.errorMessage = data.message;
+                } else {
+                    store.tasks.find((o, i) => {
+                        if (o.id === id) {
+                            store.tasks[i] = { 
+                                id: o.id, 
+                                title: o.title, 
+                                is_completed: !o.is_completed 
+                            };
+                            return true;
+                        }
+                    });
+                }
             })
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            store.errorMessage = '';
+            store.isReady = true;
         }
     }
     
@@ -67,15 +71,19 @@
             })
             .then(data => data.json())
             .then(data => {
-                const remainingTasks = store.tasks.filter(item => {
-                    return item.id !== deletedId;
-                });
-                store.tasks = remainingTasks;
+                if (data.errors) {
+                    store.errorMessage = data.message;
+                } else {
+                    const remainingTasks = store.tasks.filter(item => {
+                        return item.id !== deletedId;
+                    });
+                    store.tasks = remainingTasks;
+                }
             })
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            store.errorMessage = '';
+            store.isReady = true;
         }
     }
 </script>
