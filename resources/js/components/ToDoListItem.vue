@@ -52,6 +52,12 @@
             store.isReady = true;
         }
     }
+
+    const confirmDeletion = (id) => {
+        if (window.confirm("Voulez-vous vraiment supprimer cette tâche?")) {
+            deleteTask(id)
+        }
+    }
     
     const deleteTask = (id) => {
         store.isReady = false;
@@ -96,7 +102,7 @@
         <span :class="{ completed: is_completed }" 
             :title="'Click to mark as ' + (is_completed ? 'todo' : 'completed')">{{ title }}
         </span>
-        <button @click="deleteTask(id)">Delete</button>
+        <button @click="confirmDeletion(id)">Delete</button>
     </span>
 </template>
 
