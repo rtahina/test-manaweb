@@ -4,6 +4,7 @@ import { ref } from "vue";
 export const toDoStore = defineStore('todos', () => {
     const isNewItem = ref(false);
     const isLoading = ref(false);
+    const isReady = ref(true);
     const errorMessage = ref('');
     const tasks = ref([]);
     
@@ -34,5 +35,5 @@ export const toDoStore = defineStore('todos', () => {
         return active.length;
     }
 
-    return { addTodo, todo, tasks, countActive, countCompleted, isNewItem, isLoading, errorMessage };
+    return { addTodo, todo, tasks, countActive, countCompleted, isNewItem, isLoading, isReady, errorMessage };
 });

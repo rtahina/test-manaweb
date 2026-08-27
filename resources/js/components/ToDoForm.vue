@@ -3,10 +3,9 @@
     import { toDoStore } from "@/store/ToDoStore";
     import Error from "./Error.vue";
 
-    const error = ref('');
     const newTodoItem = ref('');
     const store = toDoStore();
-    const { errorMessage } = store;
+    const { errorMessage, isReady } = store;
 
     const addNewTask = () =>{
         store.errorMessage = '';
@@ -38,7 +37,7 @@
         } catch (e) {
             store.errorMessage = e.message;
         } finally {
-            store.isLoading = false;
+            store.isReady = true;
         }
     }
 </script>
@@ -48,7 +47,7 @@
         :message="store.errorMessage"
     />
     <form @submit.prevent="">
-        <input type="text" v-model="newTodoItem" />
+        <input type="text" v-model="newTodoItem" required />
         <button @click="addNewTask">Add</button>
     </form>
 </template>
