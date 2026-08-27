@@ -2,6 +2,7 @@
     import { ref } from 'vue';
     import { toDoStore } from "@/store/ToDoStore";
     import Error from "./Error.vue";
+    import Progress from "./Progress.vue"
 
     const newTodoItem = ref('');
     const store = toDoStore();
@@ -43,19 +44,105 @@
      <Error 
         :message="store.errorMessage"
     />
-    <form @submit.prevent="">
-        <input type="text" v-model="newTodoItem" required />
-        <button @click="addNewTask">Add</button>
-    </form>
+    <div class="app-header">
+        <div class="left">
+            <form @submit.prevent="">
+                <input type="text" v-model="newTodoItem" placeholder="Ajouter une nouvelle tâche" required />
+                <button @click="addNewTask"><span>+</span> Ajouter une tâche</button>
+            </form>
+        </div>
+        <div class="right">
+            <div class="tags">
+                <span>Toutes ({{ store.tasks.length }})</span>
+                <span>En cours ({{ store.countActive() }}) </span>
+                <span>complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
+            </div>
+            <Progress />
+        </div>
+    </div>
 </template>
 
 <style scoped>
-    form {
-        margin: 1rem auto;
+    .app-header {
         display: flex;
-        flex-direction: row;
-    }
-    input {
-        flex: 1;
+        flex-direction: column;
+        width: 100%;
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+        }
+
+        .left, .right {
+            width: 100%;
+
+            @media (min-width: 768px) {
+                width: 50%;
+            }
+        }
+
+        form {
+            margin: 1rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+        
+        input[type="text"] {
+            display: block;
+            width: 100%;
+            border: 2px solid rgb(13, 179, 13);
+            border-radius: 9999px;
+            padding: 0.5em;
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        button {
+            display: inline-flex !important;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5em;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            background: rgb(13, 179, 13);
+            border-radius: 9999px;
+            padding: 0.5em;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.3em;
+
+            span {
+                width: 30px;
+                height: 30px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                border: 3px solid #fff;
+                border-radius: 30px;
+                font-size: 1.5em;
+            }
+        }
+
+        .tags {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5em;
+            padding: 1rem 0.5rem;
+            background-color: #efefef;
+            margin-bottom: 0.5rem;
+
+            span {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1em 1em;
+                border: 2px solid #ccc;
+                border-radius: 9999px;
+                color: #555;
+                font-size: 0.8em;
+                font-weight: 500;
+            }
+        }
     }
 </style>

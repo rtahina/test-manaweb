@@ -4,7 +4,7 @@
     import TodoListIem from "./TodoListItem.vue";
     import { toDoStore } from "@/store/ToDoStore";
     import Loader from "./Loader.vue"
-    import Progress from "./Progress.vue"
+    
     
     const hideCompleted = ref(false);
     const store = toDoStore();
@@ -45,13 +45,6 @@
         <Loader />
     </span>
     <span v-else>
-        <div class="stats">
-            <span>{{ nbrItems }} items</span>
-            <span>{{ store.countActive() }} Active</span>
-            <span>{{ store.countCompleted() }} Completed</span> 
-            <span><input type="checkbox" v-model="hideCompleted"/> Active</span>
-        </div>
-        <Progress />
         <div v-for="item in store.tasks" :key="item.id">
             <TodoListIem 
             :id="item.id"
@@ -64,11 +57,5 @@
 </template>
 
 <style scoped>
-    .stats {
-        display: flex;
-        justify-content: space-between;
-        padding: 1rem 0.5rem;
-        background-color: #efefef;
-        margin-bottom: 0.5rem;
-    }
+    
 </style>

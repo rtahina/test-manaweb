@@ -25,16 +25,12 @@
 
 <style scoped>
     .todo {
-        width: 90%;
+        width: min(90%, 768px);
         margin: 0 auto;
         padding: 0.5em 2.5rem 2.5rem;
         border: 1px solid #ccc;
         border-radius: 1em;
         background: linear-gradient(to bottom, #efefef, #e5e5e5); 
-
-        @media (min-width: 768px) {
-            width: 50%;
-        }
 
         .app-title {
             display: flex;

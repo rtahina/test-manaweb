@@ -11,27 +11,31 @@
         <span class="progress-bar">
             <span class="completion" :style="`width: ${store.progress()}%`"></span>
         </span>
-        <div>{{ store.countActive() }} tâche à faire</div>
+        <div>{{ store.countActive() }} tâche{{ store.countActive() > 1 ? 's' : '' }} restante{{ store.countActive() > 1 ? 's' : '' }}</div>
     </div>
 </template>
 
 <style scoped>
     .progress {
-        padding: 0.5rem;
+        padding: 0 0.5rem;
         text-align: center;
         margin:1rem;
+        font-size: 0.9em;
 
         .progress-bar {
             display: block;
             width: 100%;
-            background-color: #efefef;
-            margin-top: 0.5em;
+            background-color: #ccc;
+            margin: 0.5em;
+            border-radius: 9999px;
         }
 
         .completion {
             display: block;
             padding: 3px;
-            background-color: blue;
+            background-color: rgb(53, 53, 170);
+            border-radius: 9999px;
+            transition: all 0.3s ease-in;
         }
     }
 </style>
