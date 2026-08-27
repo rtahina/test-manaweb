@@ -25,6 +25,7 @@
 
 <style scoped>
     .todo {
+        position: relative;
         width: min(90%, 768px);
         margin: 0 auto;
         padding: 0.5em 2.5rem 2.5rem;
