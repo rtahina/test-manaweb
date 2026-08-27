@@ -6,7 +6,7 @@
 
     const newTodoItem = ref('');
     const store = toDoStore();
-    const { errorMessage, isReady, toggleHideCompleted, resetToggles } = store;
+    const { errorMessage, isReady, toggleHideActive, toggleHideCompleted, resetToggles } = store;
 
     const addNewTask = () =>{
         store.errorMessage = '';
@@ -40,7 +40,13 @@
     }
 
     const toggleShowActive = () => {
+        resetToggles();
         toggleHideCompleted();
+    }
+
+    const toggleShowCompleted = () => {
+        resetToggles();
+        toggleHideActive();
     }
 
     const resetFilters = () => {
@@ -64,7 +70,7 @@
             <div class="tags">
                 <span @click="resetFilters">Toutes ({{ store.tasks.length }})</span>
                 <span @click="toggleShowActive">En cours ({{ store.countActive() }}) </span>
-                <span>complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
+                <span @click="toggleShowCompleted">complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
             </div>
             <Progress />
         </div>

@@ -86,7 +86,7 @@
 
 <template>
     
-    <span class="todo-list-item" :class="{hide: (is_completed && store.hideCompleted)}">
+    <span class="todo-list-item" :class="{hide: (is_completed && store.hideCompleted) || (!is_completed && store.hideActive)}">
         <input type="checkbox" @click="toggleComplete(id)" :checked="is_completed"/>
         <span :class="{ completed: is_completed }" 
             :title="'Click to mark as ' + (is_completed ? 'todo' : 'completed')">{{ title }}
