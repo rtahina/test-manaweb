@@ -26,4 +26,15 @@ class TaskRequest extends FormRequest
             'title' => 'required|min:3|max:250',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Le champ titre est requis.',
+            'title.min' => 'Le titre doit avoir plus de :min caractères.',
+        ];
+    }
 }
