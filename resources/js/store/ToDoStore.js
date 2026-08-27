@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 export const toDoStore = defineStore('todos', () => {
     const isLoading = ref(false);
-    const isReady = ref(true);
+    const isReady = ref(false);
     const errorMessage = ref('');
     const tasks = ref([]);
     const hideActive = ref(false);
