@@ -18,7 +18,7 @@ final class Task
     public static function create(string $title): self
     {
         return new self(
-            id: null,
+            id: 0,
             title: $title,
             isCompleted: false,
             createdAt: new DateTimeImmutable
