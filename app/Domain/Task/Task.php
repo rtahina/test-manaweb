@@ -34,6 +34,15 @@ final class Task
         return new self($id, $title, $isComplete, $createdAt);
     }
 
+    public static function toggleStatus(Task $task): self {
+        return new self(
+            $task->id(), 
+            $task->title(), 
+            !$task->isCompleted(), // Toggle is_completed
+            $task->createdAt()
+        );
+    }
+
     public function id(): int
     {
         return $this->id;
