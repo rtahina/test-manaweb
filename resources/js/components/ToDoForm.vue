@@ -16,7 +16,7 @@
             title: newTodoItem.value
         };
         try {
-            const data = fetch(url, {
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,7 +29,7 @@
                 if (data.errors) {
                     store.errorMessage = data.message;
                 } else {
-                    store.tasks.push(data);
+                    store.tasks.unshift(data.data);
                     newTodoItem.value = '';
                 }
                 store.isReady = true;

@@ -10,10 +10,10 @@
         store.isReady = false;
         
         try {
-            const data = fetch("http://127.0.0.1:8000/api/tasks")
+            fetch("http://127.0.0.1:8000/api/tasks")
             .then(data => data.json())
             .then(data => {
-                store.tasks = data;
+                store.tasks = data.data;
                 nbrItems.value = data.length;
                 store.isReady = true;
             })
@@ -39,7 +39,7 @@
             <TodoListIem 
             :id="item.id"
             :title="item.title"
-            :is_completed="item.is_completed"
+            :isCompleted="item.isCompleted"
         />
         </div>
     </span>

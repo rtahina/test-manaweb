@@ -12,7 +12,7 @@
             type: String,
             required: true,
         },
-        is_completed: {
+        isCompleted: {
             type: Boolean,
             default: false
         }
@@ -25,7 +25,7 @@
             fetch(url, {
                 method: 'PATCH',
                 headers: {
-                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
@@ -39,7 +39,7 @@
                             store.tasks[i] = { 
                                 id: o.id, 
                                 title: o.title, 
-                                is_completed: !o.is_completed 
+                                isCompleted: !o.isCompleted 
                             };
                             return true;
                         }
@@ -92,15 +92,15 @@
 </script>
 
 <template>
-    <span class="todo-list-item" :class="{hide: (is_completed && store.hideCompleted) || (!is_completed && store.hideActive)}">
+    <span class="todo-list-item" :class="{hide: (isCompleted && store.hideCompleted) || (!isCompleted && store.hideActive)}">
         <div class="container">
             <div class="round">
-                <input type="checkbox" @click="toggleComplete(id)" :checked="is_completed" :id="`chk_${id}`" />
+                <input type="checkbox" @click="toggleComplete(id)" :checked="isCompleted" :id="`chk_${id}`" />
                 <label :for="`chk_${id}`"></label>
             </div>
         </div>
-        <span :class="{ completed: is_completed }" 
-            :title="'Click to mark as ' + (is_completed ? 'todo' : 'completed')">{{ title }}
+        <span :class="{ completed: isCompleted }" 
+            :title="'Click to mark as ' + (isCompleted ? 'todo' : 'completed')">{{ title }}
         </span>
         <button @click="confirmDeletion(id)">Delete</button>
     </span>

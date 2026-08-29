@@ -12,7 +12,7 @@ export const toDoStore = defineStore('todos', () => {
     const todo = ref({
         id:0,
         title: '',
-        is_completed: false
+        isCompleted: false
     });
 
     const addTodo = (todoTitle) => {
@@ -22,7 +22,7 @@ export const toDoStore = defineStore('todos', () => {
 
     const countCompleted = () => {
         const active = tasks.value.filter(item => {
-            return item.is_completed;
+            return item.isCompleted;
         });
 
         return active.length;
@@ -30,7 +30,7 @@ export const toDoStore = defineStore('todos', () => {
 
     const countActive = () => {
         const active = tasks.value.filter(item => {
-            return item.is_completed === false;
+            return item.isCompleted === false;
         });
 
         return active.length;
