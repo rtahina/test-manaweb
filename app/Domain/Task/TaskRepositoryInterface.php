@@ -17,5 +17,5 @@ interface TaskRepositoryInterface
      */
     public function all(): array;
 
-    public function delete(int $id): void;
+    public function delete(int $id): int;
 }
