@@ -8,15 +8,14 @@ use App\Actions\Task\DTO\TaskData;
 use App\Domain\Task\Task;
 use App\Domain\Task\TaskRepositoryInterface;
 use App\Infrastructure\Task\Persistence\TaskMapper;
-use Illuminate\Http\Request;
 
 final class CreateTask
 {
     public function __construct(private readonly TaskRepositoryInterface $repository) {}
 
-    public function handle(Request $request): TaskData
+    public function handle(string $title): TaskData
     {
-        $task = Task::create($request->get('title'));
+        $task = Task::create($title);
         $taskModel = $this->repository->save($task);
         $taskDomain = (new TaskMapper)->toDomain($taskModel);
 

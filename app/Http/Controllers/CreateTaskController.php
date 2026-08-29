@@ -17,7 +17,7 @@ final class CreateTaskController extends Controller
      */
     public function __invoke(TaskRequest $request, CreateTask $action): JsonResponse
     {
-        $task = $action->handle($request);
+        $task = $action->handle($request->get('title'));
 
         return (new TaskResource($task))->response()->setStatusCode(Response::HTTP_CREATED);
     }
