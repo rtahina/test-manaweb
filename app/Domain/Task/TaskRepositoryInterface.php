@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Task;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Infrastructure\Task\Persistence\TaskModel;
 
 interface TaskRepositoryInterface
 {
-    public function save(Task $task): Model;
+    public function save(Task $task): TaskModel;
 
     public function findById(int $id): ?Task;
 

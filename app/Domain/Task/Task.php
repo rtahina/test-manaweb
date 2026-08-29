@@ -21,7 +21,7 @@ final class Task
             id: 0,
             title: $title,
             isCompleted: false,
-            createdAt: new DateTimeImmutable
+            createdAt: new DateTimeImmutable()
         );
     }
 
